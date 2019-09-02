@@ -1,5 +1,5 @@
-let w = window.innerWidth / 1.001
-let h = window.innerHeight / 1.002
+let w = window.innerWidth / 1.02
+let h = window.innerHeight / 1.02
 //Draws first canvas
 function startGame (){
 
@@ -38,7 +38,11 @@ var ctx = canvas.getContext('2d');
                     break;
                 }
             }
+            if(ang > 360 || ang < -360){
+                ang = 0
+            }
             ctx.rotate(Math.PI / 180 * (ang));
+            console.log(ang)
             ctx.drawImage(img, -cache.width , -cache.height ); //draw the image ;)
             
 
@@ -94,6 +98,7 @@ function startCanvas2(){
         
     }
     drawStars()
+    
     //drawing asteroids
     function drawRocks() {
         let count = -100
@@ -114,7 +119,7 @@ function startCanvas2(){
     }
     drawRocks()
     
-   
+ 
     }
 
     startCanvas2()
