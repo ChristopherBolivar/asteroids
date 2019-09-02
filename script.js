@@ -1,6 +1,5 @@
-
-let w = window.innerWidth / 1.02
-let h = window.innerHeight / 1.02
+let w = window.innerWidth / 1.001
+let h = window.innerHeight / 1.002
 //Draws first canvas
 function startGame (){
 
@@ -20,7 +19,7 @@ var ctx = canvas.getContext('2d');
             img.onload = function () { //on image load do the following stuff
             var cache = this; //cache the local copy of image element for future reference
             setInterval(function () {
-
+            let c = 0
             ctx.save(); //saves the state of canvas
             ctx.clearRect(0,0 , w , h); //clear the canvas
             ctx.translate(w / 2, h - 150); //let's translate
@@ -33,6 +32,9 @@ var ctx = canvas.getContext('2d');
                     break;
                     case 40:
                     ang-=25
+                    break;
+                    case 37:
+                    c++
                     break;
                 }
             }
@@ -60,6 +62,19 @@ function startCanvas2(){
         var ctx2 = canvas2.getContext('2d');
         canvas2.width = w
         canvas2.height = h
+    //      function clear() {
+    //     ctx2.clearRect(0, 0, ctx2.canvas.width, ctx2.canvas.height);
+    //  }clear()
+    //   function stop() {
+    //    clearInterval(ctx2.interval);
+    //  } 
+    //  function score() {
+    //    //var points = Math.floor(ctx2.frames / 5);
+    //    ctx2.font = "18px serif";
+    //    ctx2.fillStyle = "black";
+    //    ctx2.fillText("Score: " + points, 350, 50);
+    //  }
+         
 
     //drawing background
         function drawBG() {
@@ -111,3 +126,9 @@ function startCanvas2(){
 
     
     startGame()
+
+
+
+
+
+   
