@@ -37,13 +37,16 @@ var ctx = canvas.getContext('2d');
                     case 37:
                     c++
                     break;
+                    case 32:
+                    console.log(ang)
+                    break;
                 }
             }
             if(ang > 360 || ang < -360){
                 ang = 0
             }
             ctx.rotate(Math.PI / 180 * (ang));
-            console.log(ang)
+            //console.log(ang)
             ctx.drawImage(img, -cache.width , -cache.height ); //draw the image ;)
             
 
@@ -53,6 +56,7 @@ var ctx = canvas.getContext('2d');
 
     img.src = 'ship.png'; //img
 }
+
 
 
 
@@ -67,18 +71,7 @@ function startCanvas2(){
         var ctx2 = canvas2.getContext('2d');
         canvas2.width = window.innerWidth / 1.02
         canvas2.height = window.innerHeight / 1.02
-    //      function clear() {
-    //     ctx2.clearRect(0, 0, ctx2.canvas.width, ctx2.canvas.height);
-    //  }clear()
-    //   function stop() {
-    //    clearInterval(ctx2.interval);
-    //  } 
-    //  function score() {
-    //    //var points = Math.floor(ctx2.frames / 5);
-    //    ctx2.font = "18px serif";
-    //    ctx2.fillStyle = "black";
-    //    ctx2.fillText("Score: " + points, 350, 50);
-    //  }
+  
     var requestAnimationFrame = window.requestAnimationFrame || 
     window.mozRequestAnimationFrame || 
     window.webkitRequestAnimationFrame || 
@@ -121,7 +114,7 @@ function startCanvas2(){
     for(let i=0; i<100; i++){
         arr.push(new Rectangle(Math.random()*canvas2.width,Math.random()*-10000,50,50))
     }
-    for(let i=0; i<canvas2.height; i++){
+    for(let i=0; i<=canvas2.height; i++){
         sArr.push(new Rectangle(Math.random()*canvas2.width,Math.random()*-10000,1,1))
     }
     
