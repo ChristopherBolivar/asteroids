@@ -9,6 +9,12 @@ canvas.width = w
 canvas.height = h
 canvas.height = h
 var ctx = canvas.getContext('2d');
+var barr = []
+  
+   
+            
+        
+    
 
 
 
@@ -39,6 +45,7 @@ var ctx = canvas.getContext('2d');
                     break;
                     case 32:
                     console.log(ang)
+                    barr.push(new Bullet(w / 2, h - 150,15,25))
                     break;
                 }
             }
@@ -55,14 +62,32 @@ var ctx = canvas.getContext('2d');
     };
 
     img.src = 'ship.png'; //img
+
+
+    class Bullet {
+        constructor(x,y,width,height){
+            this.x =x;
+            this.y =y;
+            this.w =width;
+            this.h =height;
+        }
+        shoot(){
+            this.y-=10
+            ctx.fillStyle = "green";
+            ctx.fillRect(this.x, this.y, this.w, this.h);
+            console.log(ang)
+        }
+        draw(){
+            ctx.fillRect(this.x, this.y, this.w, this.h);
+        }
+    }
 }
-
-
-
-
 
 drawShip()
 
+
+  
+    
 
 // function starts second canvas w/ enviroment
 function startCanvas2(){
@@ -128,6 +153,10 @@ function startCanvas2(){
         sArr.forEach(block=>{
             block.downSlowly()
         })
+        barr.forEach(shot=>{
+            shot.shoot()
+            
+        })
         window.requestAnimationFrame(updateCanvas)
     }
     let w = window.requestAnimationFrame(updateCanvas)
@@ -151,4 +180,3 @@ function startCanvas2(){
 
 
 
-   
