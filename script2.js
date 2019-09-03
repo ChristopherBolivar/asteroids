@@ -45,7 +45,7 @@ var barr = []
                     break;
                     case 32:
                     console.log(ang)
-                    barr.push(new Bullet(w / 2, h - 150,15,25))
+                    barr.push(new Bullet(w / 2.05, h - 150,15,25))
                     break;
                 }
             }
@@ -153,8 +153,8 @@ function startCanvas2(){
         sArr.forEach(block=>{
             block.downSlowly()
         })
-        barr.forEach(shot=>{
-            shot.shoot()
+        barr.forEach(lazer=>{
+            lazer.shoot()
             
         })
         window.requestAnimationFrame(updateCanvas)
