@@ -1,8 +1,8 @@
 
-let w = window.innerWidth / 1.01
-let h = window.innerHeight / 1.02
 //Draws first canvas
 function startGame (){
+let w = window.innerWidth / 1.02
+let h = window.innerHeight / 1.02
 
 var canvas = document.getElementById('canvas');
 canvas.width = w
@@ -16,27 +16,34 @@ var ctx = canvas.getContext('2d');
     function drawShip() {
             var img = new Image();
             var ang = 0; //angle
-            var fps = 1000 / 60; //number of frames per sec
+            var fps = 1000 / 25; //number of frames per sec
             img.onload = function () { //on image load do the following stuff
             var cache = this; //cache the local copy of image element for future reference
             setInterval(function () {
-
+            let c = 0
             ctx.save(); //saves the state of canvas
             ctx.clearRect(0,0 , w , h); //clear the canvas
             ctx.translate(w / 2, h - 150); //let's translate
+
             //ctx.rotate(Math.PI / 180 * (ang-=1));
             document.onkeydown = function (e) {
                 switch (e.keyCode) {
                   case 38:
-                    ang+=20
+                    ang+=25
                     break;
                     case 40:
-                    ang-=20
+                    ang-=25
+                    break;
+                    case 37:
+                    c++
                     break;
                 }
             }
+            if(ang > 360 || ang < -360){
+                ang = 0
+            }
+            ctx.rotate(Math.PI / 180 * (ang));
             console.log(ang)
-            ctx.rotate(Math.PI  / 180 * (ang));
             ctx.drawImage(img, -cache.width , -cache.height ); //draw the image ;)
             
 
@@ -54,68 +61,101 @@ drawShip()
 
 
 // function starts second canvas w/ enviroment
+function startCanvas2(){
+    
+        var canvas2 = document.getElementById('canvas2');
+        var ctx2 = canvas2.getContext('2d');
+        canvas2.width = window.innerWidth / 1.02
+        canvas2.height = window.innerHeight / 1.02
+    //      function clear() {
+    //     ctx2.clearRect(0, 0, ctx2.canvas.width, ctx2.canvas.height);
+    //  }clear()
+    //   function stop() {
+    //    clearInterval(ctx2.interval);
+    //  } 
+    //  function score() {
+    //    //var points = Math.floor(ctx2.frames / 5);
+    //    ctx2.font = "18px serif";
+    //    ctx2.fillStyle = "black";
+    //    ctx2.fillText("Score: " + points, 350, 50);
+    //  }
+    var requestAnimationFrame = window.requestAnimationFrame || 
+    window.mozRequestAnimationFrame || 
+    window.webkitRequestAnimationFrame || 
+    window.msRequestAnimationFrame;
 
-    
-let w = window.innerWidth / 1.06
-let h = window.innerHeight / 1.06
-  var myGamePiece;
+    //drawing background
+        function drawBG() {
+        ctx2.fillStyle = "#000"
+        ctx2.fillRect(0, 0 , canvas2.width, canvas2.height)
+    }
+    drawBG()
 
-  function startCanvas() {
-      myGamePiece = new component(30, 30, "red", 80, 75);
-      myGameArea.start();
-  }
   
-  var myGameArea = {
-      canvas : document.getElementById("canvas2"),
-      start : function() {
-          this.canvas.width = w;
-          this.canvas.height = h;
-          this.context = this.canvas.getContext("2d");
-          document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-          this.interval = setInterval(updateGameArea, 20);        
-      },
-      stop : function() {
-          clearInterval(this.interval);
-      },    
-      clear : function() {
-          this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      }
-  }
-  
-  function component(width, height, color, x, y, type) {
-      this.type = type;
-      this.width = width;
-      this.height = height;
-      this.x = x;
-      this.y = y;    
-      this.speedX = 0;
-      this.speedY = 0;    
-      this.gravity = 0.05;
-      this.gravitySpeed = 0;
-      this.update = function() {
-          ctx = myGameArea.context;
-          ctx.fillStyle = color;
-          ctx.fillRect(this.x, this.y, this.width, this.height);
-      }
-      this.newPos = function() {
-          this.gravitySpeed += this.gravity;
-          this.x += this.speedX;
-          this.y += this.speedY + this.gravitySpeed;        
-      }
-  }
-  
-  function updateGameArea() {
-      myGameArea.clear();
-      myGamePiece.newPos();
-      myGamePiece.update();
-  }
-  
+
+    class Rectangle {
+        constructor(x,y,width,height){
+            this.x =x;
+            this.y =y;
+            this.w =width;
+            this.h =height;
+        }
+        down(){
+            this.y+=5
+            ctx2.fillStyle = "red";
+            ctx2.fillRect(this.x, this.y, this.w, this.h);
+        }
+        downSlowly(){
+            this.y+=1
+            ctx2.fillStyle = "white";
+            ctx2.fillRect(this.x, this.y, this.w, this.h);
+        }
+        draw(){
+            ctx2.fillRect(this.x, this.y, this.w, this.h);
+        }
+    }
     
-startGame()
-  startCanvas()
+    let arr = [] 
+    let sArr = []
     
+    for(let i=0; i<100; i++){
+        arr.push(new Rectangle(Math.random()*canvas2.width,Math.random()*-10000,50,50))
+    }
+    for(let i=0; i<canvas2.height; i++){
+        sArr.push(new Rectangle(Math.random()*canvas2.width,Math.random()*-10000,1,1))
+    }
+    
+    
+    function updateCanvas() {
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+        drawBG()
+        arr.forEach(block=>{
+            block.down()
+        })
+        sArr.forEach(block=>{
+            block.downSlowly()
+        })
+        window.requestAnimationFrame(updateCanvas)
+    }
+    let w = window.requestAnimationFrame(updateCanvas)
+    
+    
+    
+ 
     }
 
+    startCanvas2()
+}
 
 
 
+
+
+    
+    startGame()
+
+
+
+
+
+   

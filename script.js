@@ -78,7 +78,10 @@ function startCanvas2(){
     //    ctx2.fillStyle = "black";
     //    ctx2.fillText("Score: " + points, 350, 50);
     //  }
-         
+    var requestAnimationFrame = window.requestAnimationFrame || 
+    window.mozRequestAnimationFrame || 
+    window.webkitRequestAnimationFrame || 
+    window.msRequestAnimationFrame;
 
     //drawing background
         function drawBG() {
@@ -109,13 +112,13 @@ function startCanvas2(){
         ctx.save(); //saves the state of canvas
         ctx.clearRect(0, 0, canvas.width , canvas.height); //clear the canvas
         ctx2.fillStyle = "red"
-        ctx2.fillRect(Math.floor(Math.random() * w) , Math.floor(Math.random() * h / count) , 25, 25)
+        ctx2.fillRect(Math.floor(Math.random() * w), Math.floor(Math.random() * h / count), 25, 25)
         ctx.restore(); //restore the state of canvas
         count++
         }
+        
     }, fps)
         }
-        
     }
     drawRocks()
     
