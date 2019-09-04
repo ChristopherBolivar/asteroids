@@ -28,11 +28,9 @@ function startGame() {
         },
         moveLeft: function () {
             this.x -= 55
-            console.log(this.x)
         },
         moveRight: function () {
             this.x += 55
-            console.log(this.x)
         },
         
     }
@@ -67,40 +65,6 @@ function startGame() {
         }
     }
 
-    //draws spaceship on first canvas
-   
-    // function drawShip() {
-    //     var img = new Image();
-    //     //var fps = 1000 / 25; //number of frames per sec
-    //     img.onload = function () { //on image load do the following stuff
-    //         var cache = this; //cache the local copy of image element for future reference
-    //         ctx.save(); //saves the state of canvas
-    //         ctx.clearRect(0, 0, w, h); //clear the canvas
-    //         ctx.translate(w / 2, h - 150); //let's translate
-
-
-    //         if (ang > 360 || ang < -360) {
-    //             ang = 0
-    //         }
-    //         ctx.rotate(Math.PI / 180 * (ang));
-    //         console.log(ang)
-    //         ctx.drawImage(img, -cache.width, -cache.height); //draw the image ;)
-
-    //         ctx.restore(); //restore the state of canvas
-    //         //}, fps);
-    //     };
-
-    //     img.src = 'ship.png'; //img
-
-    //     function getTanFromDegrees(degrees) {
-    //         //return Math.tan(degrees * Math.PI/180);
-    //         return Math.tan(degrees)
-    //     }
-        
-    // }
-    //drawShip()
-
-    
    
     class Bullet {
         constructor(x, y, width, height, angle) {
@@ -111,12 +75,10 @@ function startGame() {
             this.angle = angle
         }
         shoot() {
-            console.log(this.angle)
+            
             this.y-=10
-            //this.angle ?  this.x+= -1*(10/this.angle) : ''
             ctx.fillStyle = "green";
             ctx.fillRect(this.x, this.y, this.w, this.h);
-            console.log(ang)
 
 
         }
@@ -217,16 +179,32 @@ function startGame() {
                     ship.y + ship.h > rock.y) {
                     // collision detected!
                     console.log('GAME OVER')
-                    window.cancelAnimationFrame()
+                    window.cancelAnimationFrame() 
                 }
             })
-        
+            arr.forEach(block => {
+            barr.forEach(lazer =>{
+            
+                
+                    if (lazer.x < block.x + block.w &&
+                        lazer.x + lazer.w > block.x &&
+                        lazer.y < block.y + block.h &&
+                        lazer.y + lazer.h > block.y) {
+                        // collision detected!
+                        console.log(arr.indexOf(block))
+                        console.log(arr)
+                        arr.splice(arr.indexOf(block), 1)
+                        barr.splice(arr.indexOf(lazer), 1)
+                        console.log(arr)
+                        console.log('collision')
+                    }
+                })
+            })
         
         }
-
-
+         
     }
-
+  
 
   //  startCanvas2()
 //}
