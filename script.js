@@ -35,14 +35,12 @@ function startGame() {
         
     }
     var img = new Image();
-        //var fps = 1000 / 25; //number of frames per sec
         img.onload = function () { //on image load do the following stuff
             ctx.drawImage(img, craft.x, craft.y, craft.w,  craft.h);
             ctx.rotate(Math.PI / 180 * (ang))
            };
         img.src = 'ship.png'; //img
 
-    //ctx.rotate(Math.PI / 180 * (ang-=1));
 
     document.onkeydown = function (e) {
         switch (e.keyCode) {
@@ -59,20 +57,18 @@ function startGame() {
                 craft.moveRight()
                 break;
             case 32:
-                let tan = Math.tan(ang)
-                barr.push(new Bullet(craft.x, craft.y, 15, 25, tan))
+                barr.push(new Bullet(craft.x, craft.y, 15, 25))
                 break;
         }
     }
 
    
     class Bullet {
-        constructor(x, y, width, height, angle) {
+        constructor(x, y, width, height) {
             this.x = x;
             this.y = y;
             this.w = width;
             this.h = height;
-            this.angle = angle
         }
         shoot() {
             
@@ -134,12 +130,18 @@ function startGame() {
 
         let arr = []
         let sArr = []
-
-        for (let i = 0; i < 100; i++) {
+        let mAmount = 100
+        let c = 0
+        for (let i = 0; i < mAmount; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 50))
+            c++
+        }
+        if(c <= mAmount){
+            mAmount+=250
         }
         for (let i = 0; i <= canvas2.height; i++) {
             sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 1, 1))
+        
         }
 
 
@@ -167,7 +169,7 @@ function startGame() {
         
         function checkCollision() {
             var ship = craft;
-            //console.log(rect1)
+
         
             arr.forEach(block => {
         
@@ -190,13 +192,11 @@ function startGame() {
                         lazer.x + lazer.w > block.x &&
                         lazer.y < block.y + block.h &&
                         lazer.y + lazer.h > block.y) {
-                        // collision detected!
-                        console.log(arr.indexOf(block))
-                        console.log(arr)
                         arr.splice(arr.indexOf(block), 1)
+                    }
+                    if(lazer.y < 0){
+
                         barr.splice(arr.indexOf(lazer), 1)
-                        console.log(arr)
-                        console.log('collision')
                     }
                 })
             })
