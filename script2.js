@@ -9,35 +9,7 @@ function startGame() {
     canvas.height = h
     var ctx = canvas.getContext('2d');
     //ctx.rotate(45 * Math.PI / 180);
-    var barr = []
-
-
-
-
-    class Bullet {
-        constructor(x, y, width, height, angle) {
-            this.x = x;
-            this.y = y;
-            this.w = width;
-            this.h = height;
-            this.angle = angle
-        }
-        shoot() {
-            console.log(this.angle)
-            this.y-=10
-            this.angle ?  this.x+= -1*(10/this.angle) : ''
-            ctx.fillStyle = "green";
-            ctx.fillRect(this.x, this.y, this.w, this.h);
-            console.log(ang)
-
-
-        }
-        draw() {
-
-            ctx.fillRect(this.x, this.y, this.w, this.h);
-        }
-    }
-
+   
     var ang = 0; //angle
 
 
@@ -98,8 +70,40 @@ function startGame() {
 
 
 
+    var canvas3 = document.getElementById('canvas3');
+    var ctx3 = canvas3.getContext('2d');
+    canvas3.width = w
+    canvas3.height = h
+    var barr = []
 
 
+
+
+    class Bullet {
+        constructor(x, y, width, height, angle) {
+            this.x = x;
+            this.y = y;
+            this.w = width;
+            this.h = height;
+            this.angle = angle
+        }
+        shoot() {
+            console.log(this.angle)
+            this.y-=10
+            this.angle ?  this.x+= -1*(10/this.angle) : ''
+            ctx3.fillStyle = "green";
+            ctx3.fillRect(this.x, this.y, this.w, this.h);
+            console.log(ang)
+
+
+        }
+        draw() {
+
+            ctx3.fillRect(this.x, this.y, this.w, this.h);
+        }
+    }
+
+   
     // function starts second canvas w/ enviroment
     //function startCanvas2() {
 
@@ -158,7 +162,9 @@ function startGame() {
         function updateCanvas() {
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
             drawBG()
-            drawShip()
+            //drawShip()
+
+            ctx.drawImage(img, ship.x, ship.y, w, h);
 
             arr.forEach(block => {
                 block.down()
