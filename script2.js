@@ -26,58 +26,69 @@ var barr = []
             img.onload = function () { //on image load do the following stuff
             var cache = this; //cache the local copy of image element for future reference
             setInterval(function () {
-            let c = 0
-            ctx.save(); //saves the state of canvas
-            ctx.clearRect(0,0 , w , h); //clear the canvas
-            ctx.translate(w / 2, h - 150); //let's translate
+                let c = 0
+                ctx.save(); //saves the state of canvas
+                ctx.clearRect(0,0 , w , h); //clear the canvas
+                ctx.translate(w / 2, h - 150); //let's translate
 
-            //ctx.rotate(Math.PI / 180 * (ang-=1));
-            document.onkeydown = function (e) {
-                switch (e.keyCode) {
-                  case 38:
-                    ang+=25
-                    break;
-                    case 40:
-                    ang-=25
-                    break;
-                    case 37:
-                    c++
-                    break;
-                    case 32:
-                    console.log(ang)
-                    barr.push(new Bullet(w / 2.05, h - 150,15,25))
-                    break;
+                //ctx.rotate(Math.PI / 180 * (ang-=1));
+                document.onkeydown = function (e) {
+                    switch (e.keyCode) {
+                    case 38:
+                        ang+=25
+                        break;
+                        case 40:
+                        ang-=25
+                        break;
+                        case 37:
+                        c++
+                        break;
+                        case 32: 
+                        console.log(ang)
+                        let tan = Math.tan(ang)
+                        barr.push(new Bullet(w / 2.05, h - 150,15,25, tan))
+                        break;
+                    }
                 }
-            }
-            if(ang > 360 || ang < -360){
-                ang = 0
-            }
-            ctx.rotate(Math.PI / 180 * (ang));
-            //console.log(ang)
-            ctx.drawImage(img, -cache.width , -cache.height ); //draw the image ;)
-            
+                if(ang > 360 || ang < -360){
+                    ang = 0
+                }
+                ctx.rotate(Math.PI / 180 * (ang));
+                //console.log(ang)
+                ctx.drawImage(img, -cache.width , -cache.height ); //draw the image ;)
+                
 
-            ctx.restore(); //restore the state of canvas
+                ctx.restore(); //restore the state of canvas
         }, fps);
     };
 
     img.src = 'ship.png'; //img
 
+    function getTanFromDegrees(degrees) {
+        //return Math.tan(degrees * Math.PI/180);
+        return Math.tan(degrees)
+      }
 
     class Bullet {
-        constructor(x,y,width,height){
+        constructor(x,y,width,height,angle){
             this.x =x;
             this.y =y;
             this.w =width;
             this.h =height;
+            this.angle = angle
         }
         shoot(){
-            this.y-=10
+            console.log(this.angle)
+            //this.y-=10
+            //this.angle ?  this.x+= -1*(10/this.angle) : ''
             ctx.fillStyle = "green";
             ctx.fillRect(this.x, this.y, this.w, this.h);
             console.log(ang)
+
+            
         }
         draw(){
+
             ctx.fillRect(this.x, this.y, this.w, this.h);
         }
     }
@@ -165,6 +176,7 @@ function startCanvas2(){
     
  
     }
+
 
     startCanvas2()
 }
