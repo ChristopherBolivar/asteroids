@@ -8,8 +8,6 @@ function startGame() {
     canvas.height = h
     var ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = 'white';
-    ctx.font = '18px serif';
     //ctx.rotate(45 * Math.PI / 180);
     var barr = []
     var ang = 0; //angle
@@ -128,31 +126,37 @@ function startGame() {
 
         let arr = []
         let sArr = []
-        let mAmount = 350
+        let mAmount = 200
         let c = 0
-        for (let i = 0; i < mAmount; i++) {
-            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 50))
+        for (let i = 0; i < 200; i++) {
+            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49))
             c++
         }
-        for (let i = 0; i < 100; i++) {
-            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 100))
+        for (let i = 0; i < 50; i++) {
+            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99))
             c++
         }
-        if(c <= mAmount){
-            mAmount+=250
-        }
+       
         for (let i = 0; i <= canvas2.height; i++) {
             sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 1, 1))
         
         }
+        console.log(arr.length)
+        function scoreTracker() {
+            ctx.fillStyle = 'white';
+            ctx.font = '18px serif';
+            ctx.fillText("Score: " + score, 1000, 50);
+            ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 70);
+        }
 
         let score = 0
+        let lifePoints = 5
         function updateCanvas() {
             
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
             ctx.clearRect(0, 0, w,h);
-            ctx.fillText("Score: " + score, 1000, 50);
             ctx.drawImage(img, craft.x, craft.y, craft.w, craft.h);
+            scoreTracker()
             drawBG()
             arr.forEach(block => {
                 block.down()
@@ -172,7 +176,6 @@ function startGame() {
         
         function checkCollision() {
             var ship = craft;
-
         
             arr.forEach(block => {
         
@@ -182,10 +185,23 @@ function startGame() {
                     ship.x + ship.w > rock.x &&
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
+                        lifePoints -= .0549
                     // collision detected!
-                    console.log('GAME OVER')
+                    // if(rock.h === 49){
+                    //     lifePoints -= 1;
+                    // }
+                    // if(rock.h === 99){
+                    //     lifePoints -= 2;
+                    // }
+                    if(lifePoints <= 0){
                     window.cancelAnimationFrame() 
+                    }
                 }
+               
+
+                
+               
+
             })
             arr.forEach(block => {
             barr.forEach(lazer =>{
@@ -197,7 +213,12 @@ function startGame() {
                         lazer.y + lazer.h > block.y) {
                         arr.splice(arr.indexOf(block), 1)
                         barr.splice(arr.indexOf(lazer), 1)
-                        score+=10
+                        if(block.h >= 101){
+                        score += 20
+                        }
+                        if(block.h >= 51){
+                            score += 10
+                            }
                     }
                     if(lazer.y < 0){
                         barr.splice(arr.indexOf(lazer), 1)
