@@ -57,7 +57,7 @@ function startGame() {
                 craft.moveRight()
                 break;
             case 32:
-                barr.push(new Bullet(craft.x + 30 , craft.y - 50, 15, 25))
+                barr.push(new Bullet(craft.x + 35 , craft.y - 50, 15, 25))
                 break;
         }
     }
@@ -228,7 +228,7 @@ function startGame() {
                             score += 10
                             }
                     }
-                    if(lazer.y < 0){
+                    if(lazer.y <= 0){
                         barr.splice(arr.indexOf(lazer), 1)
                     }
                 })
