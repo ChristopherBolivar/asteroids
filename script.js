@@ -152,7 +152,7 @@ function startGame() {
         //function to keep track of score
         function scoreTracker() {
             ctx.fillStyle = 'white';
-            ctx.font = '24px helvetica';
+            ctx.font = '24px Audiowide';
             ctx.fillText("Score: " + score, 1000, 50);
             ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
         }
