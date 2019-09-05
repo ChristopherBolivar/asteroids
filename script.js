@@ -18,8 +18,8 @@ function startGame() {
     var craft = {
         x: w / 2,
         y: h - 150,
-        w: 20,
-        h: 55,
+        w: 85,
+        h: 100,
         moveUp: function () {
             ang += 25
         },
@@ -57,7 +57,7 @@ function startGame() {
                 craft.moveRight()
                 break;
             case 32:
-                barr.push(new Bullet(craft.x, craft.y, 15, 25))
+                barr.push(new Bullet(craft.x + 30 , craft.y - 50, 15, 25))
                 break;
         }
     }
@@ -130,10 +130,14 @@ function startGame() {
 
         let arr = []
         let sArr = []
-        let mAmount = 100
+        let mAmount = 350
         let c = 0
         for (let i = 0; i < mAmount; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 50))
+            c++
+        }
+        for (let i = 0; i < 100; i++) {
+            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 100))
             c++
         }
         if(c <= mAmount){
@@ -193,9 +197,9 @@ function startGame() {
                         lazer.y < block.y + block.h &&
                         lazer.y + lazer.h > block.y) {
                         arr.splice(arr.indexOf(block), 1)
+                        barr.splice(arr.indexOf(lazer), 1)
                     }
                     if(lazer.y < 0){
-
                         barr.splice(arr.indexOf(lazer), 1)
                     }
                 })
@@ -206,8 +210,7 @@ function startGame() {
     }
   
 
-  //  startCanvas2()
-//}
+  
 
 
 
