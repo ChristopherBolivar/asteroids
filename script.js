@@ -37,9 +37,9 @@ function startGame() {
     var img = new Image();
         img.onload = function () { //on image load do the following stuff
             ctx.drawImage(img, craft.x, craft.y, craft.w,  craft.h);
-            ctx.rotate(Math.PI / 180 * (ang))
            };
         img.src = 'ship.png'; //img
+       
 
 
     document.onkeydown = function (e) {
@@ -109,10 +109,12 @@ function startGame() {
                 this.w = width;
                 this.h = height;
             }
+            
             down() {
                 this.y += 5
-                ctx2.fillStyle = "red";
-                ctx2.fillRect(this.x, this.y, this.w, this.h);
+                var myImage = new Image();
+                myImage.src = 'asteroid.png';
+               ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h);
             }
             downSlowly() {
                 this.y += 1
@@ -122,7 +124,12 @@ function startGame() {
             draw() {
                 ctx2.fillRect(this.x, this.y, this.w, this.h);
             }
+            ast(){
+                
+            }
         }
+        
+        
 
         let arr = []
         let sArr = []
@@ -141,7 +148,7 @@ function startGame() {
             sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 1, 1))
         
         }
-        console.log(arr.length)
+        
         function scoreTracker() {
             ctx.fillStyle = 'white';
             ctx.font = '18px serif';
@@ -156,6 +163,7 @@ function startGame() {
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
             ctx.clearRect(0, 0, w,h);
             ctx.drawImage(img, craft.x, craft.y, craft.w, craft.h);
+            
             scoreTracker()
             drawBG()
             arr.forEach(block => {
