@@ -1,13 +1,15 @@
 //Draws first canvas
 function startGame() {
-    let w = window.innerWidth / 1.02
-    let h = window.innerHeight / 1.02
-
+    let w = window.innerWidth / 1.01
+    let h = window.innerHeight / 1.01
     var canvas = document.getElementById('canvas');
     canvas.width = w
     canvas.height = h
     canvas.height = h
     var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'white';
+    ctx.font = '18px serif';
     //ctx.rotate(45 * Math.PI / 180);
     var barr = []
     var ang = 0; //angle
@@ -93,11 +95,7 @@ function startGame() {
         canvas2.width = window.innerWidth / 1.02
         canvas2.height = window.innerHeight / 1.02
 
-        var requestAnimationFrame = window.requestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.msRequestAnimationFrame;
-
+      
         //drawing background
         function drawBG() {
             ctx2.fillStyle = "#000"
@@ -148,11 +146,12 @@ function startGame() {
         
         }
 
-
+        let score = 0
         function updateCanvas() {
             
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
             ctx.clearRect(0, 0, w,h);
+            ctx.fillText("Score: " + score, 1000, 50);
             ctx.drawImage(img, craft.x, craft.y, craft.w, craft.h);
             drawBG()
             arr.forEach(block => {
@@ -198,6 +197,7 @@ function startGame() {
                         lazer.y + lazer.h > block.y) {
                         arr.splice(arr.indexOf(block), 1)
                         barr.splice(arr.indexOf(lazer), 1)
+                        score+=10
                     }
                     if(lazer.y < 0){
                         barr.splice(arr.indexOf(lazer), 1)
