@@ -201,9 +201,10 @@ function startGame() {
                     if(rock.h === 99){
                         lifePoints -= .07;
                     }
-                    if(lifePoints <= 0){
+                    if(lifePoints < .2){
                     window.cancelAnimationFrame() 
                     }
+                    console.log(lifePoints)
                 }
                
 
@@ -214,27 +215,38 @@ function startGame() {
             arr.forEach(block => {
             barr.forEach(lazer =>{
             
+                var mHp = 2
+                var smHp = 1
                 
                     if (lazer.x < block.x + block.w &&
                         lazer.x + lazer.w > block.x &&
                         lazer.y < block.y + block.h &&
                         lazer.y + lazer.h > block.y) {
-                        block.img = 'exp.gif'
+                        barr.splice(arr.indexOf(lazer), 1) 
                         arr.splice(arr.indexOf(block), 1)
-                        barr.splice(arr.indexOf(lazer), 1)
+                        
                         if(block.h >= 99){
                         score += 20
+                        mHp -=1
                         }
+                        
                         if(block.h >= 49){
                             score += 10
+                            smHp -=1
                             }
+                        // if(mHp <= 0 && block.h >= 99){
+                        //     arr.splice(arr.indexOf(block), 1)
+                        //     }
+                        // if(smHp <= 0 && block.h >= 99){
+                        //     arr.splice(arr.indexOf(block), 1)
+                        //  }
                     }
                     if(lazer.y <= 0){
                         barr.splice(arr.indexOf(lazer), 1)
                     }
                    
                 })
-
+                
             })
         
         }
