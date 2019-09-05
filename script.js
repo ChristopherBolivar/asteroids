@@ -7,19 +7,18 @@ function startGame() {
     canvas.height = h
     canvas.height = h
     var ctx = canvas.getContext('2d');
-
-    //ctx.rotate(45 * Math.PI / 180);
+    //lazer array
     var barr = []
     var ang = 0; //angle
 
 
 
-
+    //spaceship object
     var craft = {
         x: w / 2,
         y: h - 150,
-        w: 85,
-        h: 100,
+        w: 90,
+        h: 90,
         moveUp: function () {
             ang += 25
         },
@@ -34,14 +33,15 @@ function startGame() {
         },
         
     }
-    var img = new Image();
+        //getting image for spaceship
+        var img = new Image();
         img.onload = function () { //on image load do the following stuff
             ctx.drawImage(img, craft.x, craft.y, craft.w,  craft.h);
            };
         img.src = 'ship.png'; //img
        
-
-
+   
+    //Key functions for spaceship
     document.onkeydown = function (e) {
         switch (e.keyCode) {
             case 38:
@@ -57,27 +57,30 @@ function startGame() {
                 craft.moveRight()
                 break;
             case 32:
-                barr.push(new Bullet(craft.x + 35 , craft.y - 50, 15, 25))
+                barr.push(new Bullet(craft.x + 35 , craft.y - 50, 15, 35,limg))
                 break;
         }
     }
-
-   
+    var limg = 'lazer.png'
+    //constructor for lazer   
     class Bullet {
-        constructor(x, y, width, height) {
+        constructor(x, y, width, height, img) {
             this.x = x;
             this.y = y;
             this.w = width;
             this.h = height;
+            this.img = img
         }
         shoot() {
-            
             this.y-=10
-            ctx.fillStyle = "green";
-            ctx.fillRect(this.x, this.y, this.w, this.h);
+            var lazershot = new Image();
+            lazershot.src = this.img
+               ctx.drawImage(lazershot, this.x, this.y, this.w,  this.h);
+           }
+       
 
 
-        }
+        
         draw() {
 
             ctx.fillRect(this.x, this.y, this.w, this.h);
@@ -85,8 +88,8 @@ function startGame() {
     }
 
 
-    // function starts second canvas w/ enviroment
-    //function startCanvas2() {
+    // second canvas w/ enviroment
+    
 
         var canvas2 = document.getElementById('canvas2');
         var ctx2 = canvas2.getContext('2d');
@@ -100,20 +103,21 @@ function startGame() {
             ctx2.fillRect(0, 0, canvas2.width, canvas2.height)
         }
 
-
+        var exp = 'asteroid.png'
 
         class Rectangle {
-            constructor(x, y, width, height) {
+            constructor(x, y, width, height,img) {
                 this.x = x;
                 this.y = y;
                 this.w = width;
                 this.h = height;
+                this.img = img
             }
             
             down() {
                 this.y += 5
                 var myImage = new Image();
-                myImage.src = 'asteroid.png';
+                myImage.src = this.img
                ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h);
             }
             downSlowly() {
@@ -124,36 +128,33 @@ function startGame() {
             draw() {
                 ctx2.fillRect(this.x, this.y, this.w, this.h);
             }
-            ast(){
-                
-            }
         }
         
         
-
+        //Arr is meteor array, sArr is the array for stars
         let arr = []
         let sArr = []
         let mAmount = 200
-        let c = 0
-        for (let i = 0; i < 200; i++) {
-            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49))
-            c++
+        //looping pushing to rectangle components to draw the meteors and stars onto canvas
+        for (let i = 0; i < 300; i++) {
+            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
+           
         }
-        for (let i = 0; i < 50; i++) {
-            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99))
-            c++
+        for (let i = 0; i < 100; i++) {
+            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
+           
         }
        
         for (let i = 0; i <= canvas2.height; i++) {
             sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 1, 1))
         
         }
-        
+        //function to keep track of score
         function scoreTracker() {
             ctx.fillStyle = 'white';
-            ctx.font = '18px serif';
+            ctx.font = '24px helvetica';
             ctx.fillText("Score: " + score, 1000, 50);
-            ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 70);
+            ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
         }
 
         let score = 0
@@ -193,14 +194,13 @@ function startGame() {
                     ship.x + ship.w > rock.x &&
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
+                        
+                    if(rock.h === 49){
                         lifePoints -= .0549
-                    // collision detected!
-                    // if(rock.h === 49){
-                    //     lifePoints -= 1;
-                    // }
-                    // if(rock.h === 99){
-                    //     lifePoints -= 2;
-                    // }
+                    }
+                    if(rock.h === 99){
+                        lifePoints -= .07;
+                    }
                     if(lifePoints <= 0){
                     window.cancelAnimationFrame() 
                     }
@@ -219,19 +219,22 @@ function startGame() {
                         lazer.x + lazer.w > block.x &&
                         lazer.y < block.y + block.h &&
                         lazer.y + lazer.h > block.y) {
+                        block.img = 'exp.gif'
                         arr.splice(arr.indexOf(block), 1)
                         barr.splice(arr.indexOf(lazer), 1)
-                        if(block.h >= 101){
+                        if(block.h >= 99){
                         score += 20
                         }
-                        if(block.h >= 51){
+                        if(block.h >= 49){
                             score += 10
                             }
                     }
                     if(lazer.y <= 0){
                         barr.splice(arr.indexOf(lazer), 1)
                     }
+                   
                 })
+
             })
         
         }
