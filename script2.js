@@ -1,3 +1,8 @@
+document.querySelector("#startEngine").addEventListener('click', () => {
+    document.querySelector('#canvas-tab').click()
+    startGame()
+})
+
 //Draws first canvas
 function startGame() {
     let w = window.innerWidth / 1.01

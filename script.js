@@ -1,11 +1,12 @@
-
-
-
+document.querySelector("#startEngine").addEventListener('click', () => {
+    document.querySelector('#canvas-tab').click()
+    startGame()
+})
 
 //Draws first canvas
 function startGame() {
     let w = window.innerWidth / 1.01
-    let h = window.innerHeight / 1.01
+    let h = window.innerHeight / 1.05
     var canvas = document.getElementById('canvas');
     canvas.width = w
     canvas.height = h
@@ -104,8 +105,8 @@ function startGame() {
 
         var canvas2 = document.getElementById('canvas2');
         var ctx2 = canvas2.getContext('2d');
-        canvas2.width = window.innerWidth / 1.02
-        canvas2.height = window.innerHeight / 1.02
+        canvas2.width = window.innerWidth / 1.01
+        canvas2.height = window.innerHeight / 1.05
 
       
         //drawing background
@@ -126,7 +127,7 @@ function startGame() {
             }
             
             down() {
-                this.y += 5
+                this.y += 4
                 var myImage = new Image();
                 myImage.src = this.img
                ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h);
@@ -261,15 +262,13 @@ function startGame() {
             })
         
         }
+        
          
     }
+    
   
 
   
 
 
-
-
-
-
-startGame()
+   
