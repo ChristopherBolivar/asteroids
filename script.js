@@ -38,7 +38,6 @@ function startGame() {
         },
         moveRight: function () {
             this.x += 55
-            console.log(this.x)
             if(this.x >= 1238){
                 this.x -= 100
             }
@@ -128,9 +127,10 @@ function startGame() {
             
             down() {
                 this.y += 4
-                var myImage = new Image();
+                var myImage = new Image(); 
                 myImage.src = this.img
-               ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h);
+                ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h);
+                //console.log(this.y)
             }
             downSlowly() {
                 this.y += 1
@@ -148,11 +148,11 @@ function startGame() {
         let sArr = []
         let mAmount = 200
         //looping pushing to rectangle components to draw the meteors and stars onto canvas
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 100; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
            
         }
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 50; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
            
         }
@@ -161,11 +161,16 @@ function startGame() {
             sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 1, 1))
         
         }
+        for (let i = 0; i <= canvas2.height; i++) {
+            sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 3, 3))
+        
+        }
         //function to keep track of score
         function scoreTracker() {
             ctx.fillStyle = 'white';
             ctx.font = '24px Audiowide';
             ctx.fillText("Score: " + score, 1000, 50);
+            ctx.fillText(arr.length, 1000, 100);
             ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
         }
 
@@ -181,6 +186,7 @@ function startGame() {
             drawBG()
             arr.forEach(block => {
                 block.down()
+                
             })
             sArr.forEach(block => {
                 block.downSlowly()
@@ -190,6 +196,17 @@ function startGame() {
 
             })
             checkCollision()
+            if(arr.length === 0){
+                // for (let i = 0; i < 300; i++) {
+                //     arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
+                   
+                // }
+                // for (let i = 0; i < 100; i++) {
+                //     arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
+                   
+                // }
+                document.querySelector('#win-tab').click()
+            }
             window.requestAnimationFrame(updateCanvas)
         }
         let www = window.requestAnimationFrame(updateCanvas)
@@ -214,13 +231,18 @@ function startGame() {
                         lifePoints -= .07;
                     }
                     if(lifePoints < .2){
+                    
+                    document.querySelector('#lose-tab').click()
                     window.cancelAnimationFrame() 
+
                     }
-                    console.log(lifePoints)
+
                 }
                
-
-                
+                let cw = 0
+                if(block.y > canvas2.height){
+                    arr.splice(arr.indexOf(block), 1)
+                }
                
 
             })
@@ -246,12 +268,7 @@ function startGame() {
                             score += 10
                             smHp -=1
                             }
-                        // if(mHp <= 0 && block.h >= 99){
-                        //     arr.splice(arr.indexOf(block), 1)
-                        //     }
-                        // if(smHp <= 0 && block.h >= 99){
-                        //     arr.splice(arr.indexOf(block), 1)
-                        //  }
+                        
                     }
                     if(lazer.y <= 0){
                         barr.splice(arr.indexOf(lazer), 1)
@@ -263,7 +280,7 @@ function startGame() {
         
         }
         
-         
+                
     }
     
   
