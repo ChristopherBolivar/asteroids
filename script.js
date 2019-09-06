@@ -148,7 +148,7 @@ function startGame() {
         let tarr = []
         let sArr = []
         //looping pushing to rectangle components to draw the meteors and stars onto canvas
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 100; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
            
         }
@@ -184,6 +184,9 @@ function startGame() {
             ctx.clearRect(0, 0, w,h);
             ctx.drawImage(img, craft.x, craft.y, craft.w, craft.h);
             
+            
+            addMore()
+            
             scoreTracker()
             drawBG()
             arr.forEach(block => {
@@ -203,7 +206,7 @@ function startGame() {
 
             })
             checkCollision()
-            //addMore()
+            
             window.requestAnimationFrame(updateCanvas)
         }
         let www = window.requestAnimationFrame(updateCanvas)
@@ -233,12 +236,41 @@ function startGame() {
                     window.cancelAnimationFrame() 
 
                     }
-
+                    
+                       
                 }
                
-                let cw = 0
                 if(block.y > canvas2.height){
                     arr.splice(arr.indexOf(block), 1)
+                }
+               
+
+            })
+            tarr.forEach(block => {
+         
+                var rock = block;
+
+                if (ship.x < rock.x + rock.w &&
+                    ship.x + ship.w > rock.x &&
+                    ship.y < rock.y + rock.h &&
+                    ship.y + ship.h > rock.y) {
+                        
+                    if(rock.h === 49){
+                        lifePoints -= .0549
+                    }
+                    if(rock.h === 99){
+                        lifePoints -= .07;
+                    }
+                    if(lifePoints < .2){
+                    document.querySelector('#lose-tab').click()
+                    window.cancelAnimationFrame() 
+                    }
+                    
+                       
+                }
+               
+                if(block.y > canvas2.height){
+                    tarr.splice(tarr.indexOf(block), 1)
                 }
                
 
@@ -274,6 +306,34 @@ function startGame() {
                 })
                 
             })
+            tarr.forEach(met => {
+                barr.forEach(lazer =>{
+                
+                    
+                        if (lazer.x < met.x + met.w &&
+                            lazer.x + lazer.w > met.x &&
+                            lazer.y < met.y + met.h &&
+                            lazer.y + lazer.h > met.y) {
+                            barr.splice(arr.indexOf(lazer), 1) 
+                            tarr.splice(tarr.indexOf(met), 1)
+                            
+                            if(met.h >= 99){
+                            score += 20
+                            }
+                            
+                            if(met.h >= 49){
+                                score += 10
+                                }
+                            
+                        }
+                        if(lazer.y <= 0){
+                            barr.splice(tarr.indexOf(lazer), 1)
+                        }
+                       
+                    })
+                    
+                })
+
             sArr.forEach(star =>{
                 if(star.y > 800){
                     sArr.splice(sArr.indexOf(star), 1)
@@ -289,23 +349,37 @@ function startGame() {
                     }
                 }
             })
+            if(arr.length === 0 ){
+                if(tarr.length === 0 ){
+                           
+                document.querySelector('#win-tab').click()
+                }
+            
+            }
         
         }
-    //    function addMore(){
-    //     if(arr.length === 0){
-    //         for (let i = 0; i <= 300; i++) {
-    //             tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
-               
-    //         }
-    //         for (let i = 0; i <= 100; i++) {
-    //             tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
-               
-    //         }
-    //         //document.querySelector('#win-tab').click()
 
-           
-    //     }
-    //    }
+       let  arrEmpty = false; 
+       let  firstWaveOver = false; 
+       function addMore(){
+           if(arr.length <= 20) {
+                arrEmpty = true
+           }
+           if(arrEmpty && !firstWaveOver){
+                firstWaveOver = true
+            for (let i = 0; i <= 200; i++) {
+                tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
+               
+            }
+            for (let i = 0; i <= 100; i++) {
+                tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
+               
+            }
+
+
+           }
+       
+       }
                 
     }
     
