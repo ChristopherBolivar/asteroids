@@ -156,13 +156,12 @@ function startGame() {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
            
         }
-       
         for (let i = 0; i <= canvas2.height; i++) {
-            sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 1, 1))
+            sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() *  1000, 1, 1))
         
         }
         for (let i = 0; i <= canvas2.height; i++) {
-            sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 3, 3))
+            sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * 1000, 1.5, 1.5))
         
         }
         //function to keep track of score
@@ -170,7 +169,7 @@ function startGame() {
             ctx.fillStyle = 'white';
             ctx.font = '24px Audiowide';
             ctx.fillText("Score: " + score, 1000, 50);
-            ctx.fillText(arr.length, 1000, 100);
+            ctx.fillText(sArr.length, 1000, 100);
             ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
         }
 
@@ -206,6 +205,8 @@ function startGame() {
                    
                 // }
                 document.querySelector('#win-tab').click()
+
+               
             }
             window.requestAnimationFrame(updateCanvas)
         }
@@ -276,6 +277,21 @@ function startGame() {
                    
                 })
                 
+            })
+            sArr.forEach(star =>{
+                if(star.y > 800){
+                    sArr.splice(sArr.indexOf(star), 1)
+                }
+                if(sArr.length  <= 1000){
+                    for (let i = 0; i <= canvas2.height; i++) {
+                        sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -1000, 1, 1))
+                    
+                    }
+                    for (let i = 0; i <= canvas2.height; i++) {
+                        sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -1000, 1.5, 1.5))
+                    
+                    }
+                }
             })
         
         }
