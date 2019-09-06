@@ -145,16 +145,15 @@ function startGame() {
         
         //Arr is meteor array, sArr is the array for stars
         let arr = []
+        let tarr = []
         let sArr = []
-        let mAmount = 200
         //looping pushing to rectangle components to draw the meteors and stars onto canvas
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 200; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
            
         }
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 80; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
-           
         }
         for (let i = 0; i <= canvas2.height; i++) {
             sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() *  1000, 1, 1))
@@ -169,14 +168,18 @@ function startGame() {
             ctx.fillStyle = 'white';
             ctx.font = '24px Audiowide';
             ctx.fillText("Score: " + score, 1000, 50);
-            ctx.fillText(sArr.length, 1000, 100);
             ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
+            ctx.fillText(arr.length, 1000, 100);
+            ctx.fillText(tarr.length, 1000, 180);
         }
-
+        
         let score = 0
         let lifePoints = 5
+
         function updateCanvas() {
             
+            document.querySelector("#highscore").innerHTML = score
+            document.querySelector("#highscore2").innerHTML = score
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
             ctx.clearRect(0, 0, w,h);
             ctx.drawImage(img, craft.x, craft.y, craft.w, craft.h);
@@ -187,6 +190,11 @@ function startGame() {
                 block.down()
                 
             })
+            tarr.forEach(block => {
+                block.down()
+                
+            })
+            
             sArr.forEach(block => {
                 block.downSlowly()
             })
@@ -195,19 +203,7 @@ function startGame() {
 
             })
             checkCollision()
-            if(arr.length === 0){
-                // for (let i = 0; i < 300; i++) {
-                //     arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
-                   
-                // }
-                // for (let i = 0; i < 100; i++) {
-                //     arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
-                   
-                // }
-                document.querySelector('#win-tab').click()
-
-               
-            }
+            //addMore()
             window.requestAnimationFrame(updateCanvas)
         }
         let www = window.requestAnimationFrame(updateCanvas)
@@ -295,7 +291,21 @@ function startGame() {
             })
         
         }
-        
+    //    function addMore(){
+    //     if(arr.length === 0){
+    //         for (let i = 0; i <= 300; i++) {
+    //             tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
+               
+    //         }
+    //         for (let i = 0; i <= 100; i++) {
+    //             tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
+               
+    //         }
+    //         //document.querySelector('#win-tab').click()
+
+           
+    //     }
+    //    }
                 
     }
     
