@@ -1,3 +1,7 @@
+
+
+
+
 //Draws first canvas
 function startGame() {
     let w = window.innerWidth / 1.01
@@ -27,9 +31,16 @@ function startGame() {
         },
         moveLeft: function () {
             this.x -= 55
+            if(this.x <= 1){
+                this.x += 100
+            }
         },
         moveRight: function () {
             this.x += 55
+            console.log(this.x)
+            if(this.x >= 1238){
+                this.x -= 100
+            }
         },
         
     }

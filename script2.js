@@ -1,142 +1,144 @@
 //Draws first canvas
 function startGame() {
-    let w = window.innerWidth / 1.02
-    let h = window.innerHeight / 1.02
-
+    let w = window.innerWidth / 1.01
+    let h = window.innerHeight / 1.01
     var canvas = document.getElementById('canvas');
     canvas.width = w
     canvas.height = h
     canvas.height = h
     var ctx = canvas.getContext('2d');
-    //ctx.rotate(45 * Math.PI / 180);
-   
+    //lazer array
+    var barr = []
     var ang = 0; //angle
 
 
-    //ctx.rotate(Math.PI / 180 * (ang-=1));
+
+    //spaceship object
+    var craft = {
+        x: w / 2,
+        y: h - 150,
+        w: 90,
+        h: 90,
+        moveUp: function () {
+            ang += 25
+        },
+        moveDown: function () {
+            ang -= 25
+        },
+        moveLeft: function () {
+            this.x -= 55
+            if(this.x <= 1){
+                this.x += 100
+            }
+        },
+        moveRight: function () {
+            this.x += 55
+            if(this.x >= 1238){
+                this.x -= 100
+            }
+        },
+        
+    }
+        //getting image for spaceship
+        var img = new Image();
+        img.onload = function () { //on image load do the following stuff
+            ctx.drawImage(img, craft.x, craft.y, craft.w,  craft.h);
+           };
+        img.src = 'ship.png'; //img
+       
+   
+    //Key functions for spaceship
     document.onkeydown = function (e) {
         switch (e.keyCode) {
             case 38:
-                ang += 25
+                craft.moveUp()
                 break;
             case 40:
-                ang -= 25
+                craft.moveDown()
                 break;
             case 37:
-                c++
+                craft.moveLeft()
+                break;
+                case 39: 
+                craft.moveRight()
                 break;
             case 32:
-                console.log(ang)
-                let tan = Math.tan(ang)
-                barr.push(new Bullet(w / 2.05, h - 150, 15, 25, tan))
+                barr.push(new Bullet(craft.x + 35 , craft.y - 50, 15, 35,limg))
                 break;
         }
     }
-
-    //draws spaceship on first canvas
-    function drawShip() {
-        var img = new Image();
-        //var fps = 1000 / 25; //number of frames per sec
-        img.onload = function () { //on image load do the following stuff
-            var cache = this; //cache the local copy of image element for future reference
-            //setInterval(function () {
-            //let c = 0
-            ctx.save(); //saves the state of canvas
-            ctx.clearRect(0, 0, w, h); //clear the canvas
-            ctx.translate(w / 2, h - 150); //let's translate
-
-
-            if (ang > 360 || ang < -360) {
-                ang = 0
-            }
-            ctx.rotate(Math.PI / 180 * (ang));
-            console.log(ang)
-            ctx.drawImage(img, -cache.width, -cache.height); //draw the image ;)
-
-            ctx.restore(); //restore the state of canvas
-            //}, fps);
-        };
-
-        img.src = 'ship.png'; //img
-
-        function getTanFromDegrees(degrees) {
-            //return Math.tan(degrees * Math.PI/180);
-            return Math.tan(degrees)
-        }
-
-    }
-
-    //drawShip()
-
-
-
-    var canvas3 = document.getElementById('canvas3');
-    var ctx3 = canvas3.getContext('2d');
-    canvas3.width = w
-    canvas3.height = h
-    var barr = []
-
-
-
-
+    var limg = 'lazer.png'
+    //constructor for lazer   
     class Bullet {
-        constructor(x, y, width, height, angle) {
+        constructor(x, y, width, height, img) {
             this.x = x;
             this.y = y;
             this.w = width;
             this.h = height;
-            this.angle = angle
+            this.img = img
         }
         shoot() {
-            console.log(this.angle)
             this.y-=10
-            this.angle ?  this.x+= -1*(10/this.angle) : ''
-            ctx3.fillStyle = "green";
-            ctx3.fillRect(this.x, this.y, this.w, this.h);
-            console.log(ang)
+            var lazershot = new Image();
+            lazershot.src = this.img
+               ctx.drawImage(lazershot, this.x, this.y, this.w,  this.h);
+           }
+       
 
 
-        }
+        
         draw() {
 
-            ctx3.fillRect(this.x, this.y, this.w, this.h);
+            ctx.fillRect(this.x, this.y, this.w, this.h);
         }
     }
 
-   
-    // function starts second canvas w/ enviroment
-    //function startCanvas2() {
+
+    // second canvas w/ enviroment
+    
 
         var canvas2 = document.getElementById('canvas2');
         var ctx2 = canvas2.getContext('2d');
         canvas2.width = window.innerWidth / 1.02
         canvas2.height = window.innerHeight / 1.02
-
-        var requestAnimationFrame = window.requestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.msRequestAnimationFrame;
-
         //drawing background
         function drawBG() {
             ctx2.fillStyle = "#000"
             ctx2.fillRect(0, 0, canvas2.width, canvas2.height)
         }
-        //drawBG()
 
-
+        var exp = 'asteroid.png'
 
         class Rectangle {
-            constructor(x, y, width, height) {
+            constructor(x, y, width, height,img, degrees) {
                 this.x = x;
                 this.y = y;
                 this.w = width;
                 this.h = height;
+                this.img = img
+                this.degrees = degrees;
+                this.d = 0; 
             }
+            
             down() {
-                this.y += 5
-                ctx2.fillStyle = "red";
-                ctx2.fillRect(this.x, this.y, this.w, this.h);
+                //this.y += 5
+
+                //var cx     = this.x + 0.5 * this.w;   // x of shape center
+                //var cy = this.y + 0.5 * this.h;  // y of shape center
+      
+                var myImage = new Image();
+                myImage.src = this.img
+                this.degrees++
+                //console.log(this)
+                ctx2.save();
+                ctx2.translate(this.x,this.degrees)
+                ctx2.rotate( (Math.PI / 180) * this.degrees);  //rotate 25 degrees.
+                ctx2.translate(-this.x, -this.y);      
+                ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h)
+                // console.log(this.y)
+                // console.log(this.x)
+                //ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h,this.degrees);
+                ctx2.restore();
             }
             downSlowly() {
                 this.y += 1
@@ -147,25 +149,44 @@ function startGame() {
                 ctx2.fillRect(this.x, this.y, this.w, this.h);
             }
         }
-
+        
+        
+        //Arr is meteor array, sArr is the array for stars
         let arr = []
         let sArr = []
-
+        //looping pushing to rectangle components to draw the meteors and stars onto canvas
+      
         for (let i = 0; i < 100; i++) {
-            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 50))
+            arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * - canvas2.height  , 50, 49, exp, 90))
+           
         }
+        // for (let i = 0; i < 50; i++) {
+        //     arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
+           
+        // }
+       
         for (let i = 0; i <= canvas2.height; i++) {
             sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 1, 1))
+        
+        }
+        //function to keep track of score
+        function scoreTracker() {
+            ctx.fillStyle = 'white';
+            ctx.font = '24px Audiowide';
+            ctx.fillText("Score: " + score, 1000, 50);
+            ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
         }
 
-
+        let score = 0
+        let lifePoints = 5
         function updateCanvas() {
+            
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+            ctx.clearRect(0, 0, w,h);
+            ctx.drawImage(img, craft.x, craft.y, craft.w, craft.h);
+            
+            scoreTracker()
             drawBG()
-            //drawShip()
-
-            ctx.drawImage(img, ship.x, ship.y, w, h);
-
             arr.forEach(block => {
                 block.down()
             })
@@ -176,18 +197,85 @@ function startGame() {
                 lazer.shoot()
 
             })
+            checkCollision()
             window.requestAnimationFrame(updateCanvas)
         }
         let www = window.requestAnimationFrame(updateCanvas)
 
+        
+        function checkCollision() {
 
+            var ship = craft;
+            arr.forEach(block => {
+        
+                var rock = block;
+        
+                if (ship.x < rock.x + rock.w &&
+                    ship.x + ship.w > rock.x &&
+                    ship.y < rock.y + rock.h &&
+                    ship.y + ship.h > rock.y) {
+                    console.log("collision")
+                    if(rock.h === 49){
+                        lifePoints -= .0549
+                    }
+                    if(rock.h === 99){
+                        lifePoints -= .07;
+                    }
+                    if(lifePoints < .2){
+                    window.cancelAnimationFrame() 
+                    }
+                    //console.log(lifePoints)
+                }
+               
 
+                
+               
 
+            })
+            arr.forEach(block => {
+            barr.forEach(lazer =>{
+            
+                var mHp = 2
+                var smHp = 1
+                
+                    if (lazer.x < block.x + block.w &&
+                        lazer.x + lazer.w > block.x &&
+                        lazer.y < block.y + block.h &&
+                        lazer.y + lazer.h > block.y) {
+                        barr.splice(arr.indexOf(lazer), 1) 
+                        arr.splice(arr.indexOf(block), 1)
+                        
+                    console.log("hit")
+                        if(block.h >= 99){
+                        score += 20
+                        mHp -=1
+                        }
+                        
+                        if(block.h >= 49){
+                            score += 10
+                            smHp -=1
+                            }
+                        // if(mHp <= 0 && block.h >= 99){
+                        //     arr.splice(arr.indexOf(block), 1)
+                        //     }
+                        // if(smHp <= 0 && block.h >= 99){
+                        //     arr.splice(arr.indexOf(block), 1)
+                        //  }
+                    }
+                    if(lazer.y <= 0){
+                        barr.splice(arr.indexOf(lazer), 1)
+                    }
+                   
+                })
+                
+            })
+        
+        }
+         
     }
+  
 
-
-  //  startCanvas2()
-//}
+  
 
 
 
