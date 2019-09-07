@@ -135,11 +135,11 @@ function startGame() {
         let tarr = []
         let sArr = []
         //looping pushing to rectangle components to draw the meteors and stars onto canvas
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 100; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
            
         }
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 80; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
         }
         for (let i = 0; i <= canvas2.height; i++) {
@@ -225,6 +225,9 @@ function startGame() {
         var srSFX = new Audio()
         srSFX.volume = 1
         srSFX.src = "rockshipcrash.mp3";
+        var expSFX = new Audio()
+        expSFX.volume = 1
+        expSFX.src = "exp.mp3";
         function checkCollision() {
             var ship = craft;
 
@@ -325,6 +328,8 @@ function startGame() {
                         lazer.x + lazer.w > block.x &&
                         lazer.y < block.y + block.h &&
                         lazer.y + lazer.h > block.y) {
+                        
+                        expSFX.play()
                         barr.splice(arr.indexOf(lazer), 1) 
                         arr.splice(arr.indexOf(block), 1)
                         
@@ -354,6 +359,7 @@ function startGame() {
                             lazer.x + lazer.w > met.x &&
                             lazer.y < met.y + met.h &&
                             lazer.y + lazer.h > met.y) {
+                            expSFX.play()
                             barr.splice(arr.indexOf(lazer), 1) 
                             tarr.splice(tarr.indexOf(met), 1)
                             
@@ -403,11 +409,11 @@ function startGame() {
            }
            if(arrEmpty && !firstWaveOver){
                 firstWaveOver = true
-            for (let i = 0; i <= 20; i++) {
+            for (let i = 0; i <= 200; i++) {
                 tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
                
             }
-            for (let i = 0; i <= 10; i++) {
+            for (let i = 0; i <= 100; i++) {
                 tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
                
             }
