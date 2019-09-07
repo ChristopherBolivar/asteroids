@@ -167,10 +167,12 @@ function startGame() {
             ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
         }
         //animate function
+
+        var bgSFX = new Audio()
+        bgSFX.volume = 1
+        bgSFX.src = "bg.mp3";
         function updateCanvas() {
-            
-            // document.querySelector("#highscore").innerHTML = score
-            // document.querySelector("#highscore2").innerHTML = score
+            bgSFX.play()
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
             ctx.clearRect(0, 0, w,h);
             ctx.drawImage(img, craft.x, craft.y, craft.w, craft.h);
