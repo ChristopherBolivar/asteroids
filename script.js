@@ -155,6 +155,7 @@ function startGame() {
         let score = 0
         let lifePoints = 5
         var html = document.querySelector("#result")
+       
 
          //function to keep track of score
          function scoreTracker() {
@@ -221,8 +222,12 @@ function startGame() {
         let www = window.requestAnimationFrame(updateCanvas)
 
         
+        var srSFX = new Audio()
+        srSFX.volume = 1
+        srSFX.src = "rockshipcrash.mp3";
         function checkCollision() {
             var ship = craft;
+
         
             arr.forEach(block => {
         
@@ -232,7 +237,7 @@ function startGame() {
                     ship.x + ship.w > rock.x &&
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
-                        
+                    srSFX.play()
                     if(rock.h === 49){
                         lifePoints -= .0549
                     }
@@ -277,7 +282,8 @@ function startGame() {
                     ship.x + ship.w > rock.x &&
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
-                        
+                    srSFX.play()
+
                     if(rock.h === 49){
                         lifePoints -= .0549
                     }
