@@ -1,15 +1,19 @@
+
 document.querySelector("#startEngine").addEventListener('click', () => {
     document.querySelector('#canvas-tab').click()
     startGame()
 })
 
+
 //Draws first canvas
 function startGame() {
+    
+    
+    
     let w = window.innerWidth / 1.01
     let h = window.innerHeight / 1.05
     var canvas = document.getElementById('canvas');
     canvas.width = w
-    canvas.height = h
     canvas.height = h
     var ctx = canvas.getContext('2d');
     //lazer array
@@ -24,12 +28,7 @@ function startGame() {
         y: h - 150,
         w: 90,
         h: 90,
-        moveUp: function () {
-            ang += 25
-        },
-        moveDown: function () {
-            ang -= 25
-        },
+       
         moveLeft: function () {
             this.x -= 55
             if(this.x <= 1){
@@ -55,12 +54,6 @@ function startGame() {
     //Key functions for spaceship
     document.onkeydown = function (e) {
         switch (e.keyCode) {
-            case 38:
-                craft.moveUp()
-                break;
-            case 40:
-                craft.moveDown()
-                break;
             case 37:
                 craft.moveLeft()
                 break;
@@ -88,14 +81,6 @@ function startGame() {
             lazershot.src = this.img
                ctx.drawImage(lazershot, this.x, this.y, this.w,  this.h);
            }
-       
-
-
-        
-        draw() {
-
-            ctx.fillRect(this.x, this.y, this.w, this.h);
-        }
     }
 
 
@@ -137,22 +122,20 @@ function startGame() {
                 ctx2.fillStyle = "white";
                 ctx2.fillRect(this.x, this.y, this.w, this.h);
             }
-            draw() {
-                ctx2.fillRect(this.x, this.y, this.w, this.h);
-            }
+           
         }
         
         
-        //Arr is meteor array, sArr is the array for stars
+        //Arr is meteor array,tarr is second wave, sArr is the array for stars
         let arr = []
         let tarr = []
         let sArr = []
         //looping pushing to rectangle components to draw the meteors and stars onto canvas
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 1; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
            
         }
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 1; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
         }
         for (let i = 0; i <= canvas2.height; i++) {
@@ -163,8 +146,14 @@ function startGame() {
             sArr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * 1000, 1.5, 1.5))
         
         }
-        //function to keep track of score
-        function scoreTracker() {
+       
+        
+        let score = 0
+        let lifePoints = 5
+        var html = document.querySelector("#result")
+
+         //function to keep track of score
+         function scoreTracker() {
             ctx.fillStyle = 'white';
             ctx.font = '24px Audiowide';
             ctx.fillText("Score: " + score, 1000, 50);
@@ -172,14 +161,11 @@ function startGame() {
             ctx.fillText(arr.length, 1000, 100);
             ctx.fillText(tarr.length, 1000, 180);
         }
-        
-        let score = 0
-        let lifePoints = 5
-
+        //animate function
         function updateCanvas() {
             
-            document.querySelector("#highscore").innerHTML = score
-            document.querySelector("#highscore2").innerHTML = score
+            // document.querySelector("#highscore").innerHTML = score
+            // document.querySelector("#highscore2").innerHTML = score
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
             ctx.clearRect(0, 0, w,h);
             ctx.drawImage(img, craft.x, craft.y, craft.w, craft.h);
@@ -206,6 +192,25 @@ function startGame() {
 
             })
             checkCollision()
+            if(arr.length === 0 && tarr.length === 0 ){
+                html.innerHTML = `
+                
+                <h1>Congratulations!</h1>
+                <h2>You have cleared the asteroid fields!</h2>
+                <h3>Highscore: <span id="highscore2">${score}</span></h3>
+                <button id="playAgain2" type="button" class="btn btn-light btn-lg">Play Again</button>
+                
+                `
+
+                document.querySelector('#result-tab').click()
+                
+                document.querySelector("#playAgain2").addEventListener('click', () => {
+                    document.querySelector('#canvas-tab').click()
+                    startGame() 
+                }) 
+                
+                window.cancelAnimationFrame() 
+                }
             
             window.requestAnimationFrame(updateCanvas)
         }
@@ -232,7 +237,21 @@ function startGame() {
                     }
                     if(lifePoints < .2){
                     
-                    document.querySelector('#lose-tab').click()
+                    html.innerHTML = `
+                    
+                    <h1>You Suck!</h1>
+                    <h2>You have <u>failed</u> cleared the asteroid fields!</h2>
+                    <h3>Highscore: <span>${score}</span></h3>
+                    <button id="playAgain" type="button" class="btn btn-light btn-lg">Play Again</button>
+                    `
+
+
+                    document.querySelector("#playAgain").addEventListener('click', () => {
+                        document.querySelector('#canvas-tab').click()
+                        startGame() 
+                    }) 
+                    document.querySelector('#result-tab').click()
+
                     window.cancelAnimationFrame() 
 
                     }
@@ -262,8 +281,19 @@ function startGame() {
                         lifePoints -= .07;
                     }
                     if(lifePoints < .2){
-                    document.querySelector('#lose-tab').click()
-                    window.cancelAnimationFrame() 
+                        html.innerHTML = `
+                    
+                        <h1>You Suck!</h1>
+                        <h2>You have <u>failed</u> cleared the asteroid fields!</h2>
+                        <h3>Highscore: <span>${score}</span></h3>
+                        <button id="playAgain" type="button" class="btn btn-light btn-lg">Play Again</button>
+                        `
+                        document.querySelector("#playAgain").addEventListener('click', () => {
+                            document.querySelector('#canvas-tab').click()
+                            startGame() 
+                        }) 
+                        document.querySelector('#result-tab').click()
+                        window.cancelAnimationFrame() 
                     }
                     
                        
@@ -349,13 +379,9 @@ function startGame() {
                     }
                 }
             })
-            if(arr.length === 0 ){
-                if(tarr.length === 0 ){
-                           
-                document.querySelector('#win-tab').click()
-                }
+    
             
-            }
+        
         
         }
 
@@ -367,11 +393,11 @@ function startGame() {
            }
            if(arrEmpty && !firstWaveOver){
                 firstWaveOver = true
-            for (let i = 0; i <= 200; i++) {
+            for (let i = 0; i <= 20; i++) {
                 tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
                
             }
-            for (let i = 0; i <= 100; i++) {
+            for (let i = 0; i <= 10; i++) {
                 tarr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 100, 99, exp))
                
             }
@@ -380,7 +406,7 @@ function startGame() {
            }
        
        }
-                
+         
     }
     
   

@@ -1,4 +1,4 @@
-document.querySelector("#startEngine").addEventListener('click', () => {
+ document.querySelector("#startEngine").addEventListener('click', () => {
     document.querySelector('#canvas-tab').click()
     startGame()
 })
@@ -134,15 +134,11 @@ function startGame() {
                 var myImage = new Image();
                 myImage.src = this.img
                 this.degrees++
-                //console.log(this)
                 ctx2.save();
                 ctx2.translate(this.x,this.degrees)
                 ctx2.rotate( (Math.PI / 180) * this.degrees);  //rotate 25 degrees.
                 ctx2.translate(-this.x, -this.y);      
                 ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h)
-                // console.log(this.y)
-                // console.log(this.x)
-                //ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h,this.degrees);
                 ctx2.restore();
             }
             downSlowly() {
@@ -219,7 +215,6 @@ function startGame() {
                     ship.x + ship.w > rock.x &&
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
-                    console.log("collision")
                     if(rock.h === 49){
                         lifePoints -= .0549
                     }
@@ -229,7 +224,6 @@ function startGame() {
                     if(lifePoints < .2){
                     window.cancelAnimationFrame() 
                     }
-                    //console.log(lifePoints)
                 }
                
 
@@ -250,7 +244,6 @@ function startGame() {
                         barr.splice(arr.indexOf(lazer), 1) 
                         arr.splice(arr.indexOf(block), 1)
                         
-                    console.log("hit")
                         if(block.h >= 99){
                         score += 20
                         mHp -=1
@@ -260,12 +253,7 @@ function startGame() {
                             score += 10
                             smHp -=1
                             }
-                        // if(mHp <= 0 && block.h >= 99){
-                        //     arr.splice(arr.indexOf(block), 1)
-                        //     }
-                        // if(smHp <= 0 && block.h >= 99){
-                        //     arr.splice(arr.indexOf(block), 1)
-                        //  }
+                       
                     }
                     if(lazer.y <= 0){
                         barr.splice(arr.indexOf(lazer), 1)
