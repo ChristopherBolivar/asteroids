@@ -41,6 +41,11 @@ function startGame() {
                 this.x -= 100
             }
         },
+        shoot:  function () {
+            barr.push(new Bullet(craft.x + 35 , craft.y - 50, 15, 35,limg))
+            lazerSFX.play()
+           
+},
         
     }
         //getting image for spaceship
@@ -63,8 +68,7 @@ function startGame() {
                 craft.moveRight()
                 break;
             case 32:
-                barr.push(new Bullet(craft.x + 35 , craft.y - 50, 15, 35,limg))
-                lazerSFX.play()
+                craft.shoot()   
                 break;
         }
     }
@@ -194,6 +198,7 @@ function startGame() {
             sArr.forEach(block => {
                 block.downSlowly()
             })
+            
             barr.forEach(lazer => {
                 lazer.shoot()
 
@@ -249,7 +254,7 @@ function startGame() {
                     if(rock.h === 99){
                         lifePoints -= .07;
                     }
-                    if(lifePoints < .2){
+                    if(lifePoints < .9){
                     
                     html.innerHTML = `
                     
