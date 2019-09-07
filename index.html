@@ -11,10 +11,13 @@
             position: relative;
             background: #000;
             color: #fff;
-            text-align: center;
-            font-family: 'Audiowide', cursive;
 
 
+        }
+        body, .lead{
+
+          text-align: center;
+          font-family: 'Audiowide', cursive;
         }
         .btn-lg {
           padding: 1rem 8rem;
@@ -60,20 +63,18 @@
         padding: 0 2rem;
         margin: 0;
       }
-      #a-instructions{
-        font-family:  Helvetica, sans-serif;
+      .ast {
+        margin-left: 3rem;
       }
-      #a-instructions p {
-
+      #a-instructions,#b-instructions{
+        font-family:  Helvetica, sans-serif;
         text-align: left;
         padding-left: 2rem;
       }
-      #a-instructions ul li {
-        list-style: none;
-        display: inline;
-       width: 25%;
-      }
       #a-instructions .row {
+        margin: 1rem;
+      }
+      #b-instructions .row {
         margin: 1rem;
       }
       
@@ -88,14 +89,37 @@
               As captain of the ship it is your duty to destroy all incoming asteroids and navigate your crew to safety.</p>
             </div>
             <div class="container">
+              
               <div class="row">
+                      <div id="b-instructions" class="col-sm-6">
+
+                          <h3 class="lead">Navigation &amp; Shooting</h3>
+                        <div class="row">
+                          <p>If you collide with an asteroid you can evade more damage by navigating away</p>
+                          <div class="col-6 p-0">
+                            <img src="leftright.svg" width="150px" height="100px">
+                          </div>
+                          <div class="col-6 p-0">
+                            <p>Use the left and right arrow keys to evade incoming asteriods</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-6 p-0">
+                            <img src="keyboard.svg" width="150px" height="80px">
+                          </div>
+                          <div class="col-6 p-0">
+                            <p>Use the space button to shoot your lazer and destroy the asteroid</p>
+                          </div>
+                        </div>
+                    </div>
+            
                 <div id="a-instructions" class="col-sm-6">
-                  <h3>Asteroids</h3>
+                  <h3 class="lead">Asteroids</h3>
                   <p>In this asteroid field we have small and large asteriods all causing damage depending on how long the collision last</p>
-                  <p>If you collide with an asteroid you can evade more damage by flying away</p>
+                 
                   <div class="row">
                     <div class="col-6 p-0">
-                      <img src="asteroid.svg" width="50px" height="50px">
+                      <img class="ast" src="asteroid.svg" width="50px" height="50px">
                     </div>
                     <div class="col-6 p-0">
                       <p>Causes 1-2 Damage</p>
@@ -104,7 +128,7 @@
                   </div>
                   <div class="row">
                     <div class="col-6 p-0">
-                      <img src="asteroid.svg" width="100px" height="100px">
+                      <img  class="ast" src="asteroid.svg" width="100px" height="100px">
                     </div>
                     <div class="col-6 p-0">
                       <p>Causes 2-3 Damage</p>
