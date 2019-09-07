@@ -139,6 +139,7 @@ function startGame() {
         let tarr = []
         let sArr = []
         //looping pushing to rectangle components to draw the meteors and stars onto canvas
+        
         for (let i = 0; i < 100; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
            
@@ -165,10 +166,9 @@ function startGame() {
          function scoreTracker() {
             ctx.fillStyle = 'white';
             ctx.font = '24px Audiowide';
-            ctx.fillText("Score: " + score, 1000, 50);
-
+            ctx.fillText("Score: " + score, 1000, 40);
             ctx.fillStyle = 'red';
-            ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
+            ctx.fillText("Health: " + lifePoints.toFixed(0), 150, 40);
         }
         //animate function
 
