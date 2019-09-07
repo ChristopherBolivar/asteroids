@@ -162,9 +162,9 @@ function startGame() {
             ctx.fillStyle = 'white';
             ctx.font = '24px Audiowide';
             ctx.fillText("Score: " + score, 1000, 50);
+
+            ctx.fillStyle = 'red';
             ctx.fillText("Health: " + lifePoints.toFixed(0), 1000, 75);
-            ctx.fillText(arr.length, 1000, 100);
-            ctx.fillText(tarr.length, 1000, 180);
         }
         //animate function
         function updateCanvas() {
