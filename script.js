@@ -50,7 +50,9 @@ function startGame() {
            };
         img.src = 'ship.png'; //img
        
-   
+        var lazerSFX = new Audio()
+        lazerSFX.volume = 1
+        lazerSFX.src = "lazersfx.mp3";
     //Key functions for spaceship
     document.onkeydown = function (e) {
         switch (e.keyCode) {
@@ -62,13 +64,14 @@ function startGame() {
                 break;
             case 32:
                 barr.push(new Bullet(craft.x + 35 , craft.y - 50, 15, 35,limg))
+                lazerSFX.play()
                 break;
         }
     }
     var limg = 'lazer.png'
     //constructor for lazer   
     class Bullet {
-        constructor(x, y, width, height, img) {
+        constructor(x, y, width, height, img,sfx) {
             this.x = x;
             this.y = y;
             this.w = width;
@@ -78,8 +81,9 @@ function startGame() {
         shoot() {
             this.y-=10
             var lazershot = new Image();
-            lazershot.src = this.img
-               ctx.drawImage(lazershot, this.x, this.y, this.w,  this.h);
+            lazershot.src = 'lazer.png'
+           
+            ctx.drawImage(lazershot, this.x, this.y, this.w,  this.h);
            }
     }
 
