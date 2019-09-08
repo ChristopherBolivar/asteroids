@@ -137,6 +137,7 @@ function startGame() {
         //Arr is meteor array,tarr is second wave, sArr is the array for stars
         let arr = []
         let tarr = []
+        let eArr = []
         let sArr = []
         //looping pushing to rectangle components to draw the meteors and stars onto canvas
         
@@ -197,6 +198,10 @@ function startGame() {
             scoreTracker()
             drawBG()
             arr.forEach(block => {
+                block.down()
+                
+            })
+            eArr.forEach(block => {
                 block.down()
                 
             })
@@ -355,7 +360,7 @@ function startGame() {
             //lazer in first wave
             arr.forEach(block => {
             barr.forEach(lazer =>{
-            expArr = ['exp_0001_Layer-11.png','exp_0002_Layer-10.png','exp_0003_Layer-9.png','exp_0004_Layer-8.png']
+            expArr = ['exp_0000_Layer-12.png','exp_0001_Layer-11.png','exp_0002_Layer-10.png','exp_0003_Layer-9.png','exp_0004_Layer-8.png','exp_0005_Layer-7.png','exp_0006_Layer-6.png','exp_0007_Layer-5.png','exp_0008_Layer-4.png','exp_0000_Layer-12.png','exp_0001_Layer-11.png']
                 var mHp = 2
                 var smHp = 1
                 
@@ -365,9 +370,18 @@ function startGame() {
                         lazer.y + lazer.h > block.y) {
    
                         expSFX.play()
+                        
+                        expArr.forEach(b=>{
+                            setTimeout(function(){ 
+                            eArr.push(new Rectangle(block.x, block.y, 50, 50, b))
+                        }, 100);
+                        })
+                        setTimeout(function(){ 
+                            eArr.push(new Rectangle(block.x, block.y, 50, 50, 'exp_0000_Layer-12.png'))
+                        }, 200);
+
                         barr.splice(arr.indexOf(lazer), 1) 
                         arr.splice(arr.indexOf(block), 1)
-                   
                     
                         
                         if(block.h >= 99){
