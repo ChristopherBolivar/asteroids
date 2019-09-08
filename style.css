@@ -1,0 +1,72 @@
+ body{
+            margin: 0 auto;
+            position: relative;
+            background: #000;
+            color: #fff;
+
+
+        }
+        body, .lead{
+
+          text-align: center;
+          font-family: 'Audiowide', cursive;
+        }
+        .btn-lg {
+          padding: 1rem 8rem;
+        }
+        .nav{visibility: hidden;}
+        #canvas {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 99;
+        }
+        #canvas3 {
+          z-index: 98;
+        }
+        #canvas2{
+          z-index: 97;
+        }
+       h1,h2,h3{
+         padding: 1rem;
+         margin: .5rem 0;
+       }
+       #myTabContent{
+         position: relative;
+       }
+       #title {
+         position: absolute;
+         background: #000;
+         padding: 1rem 0;;
+         border: 1px solid white;
+         border-radius: 10px;
+         top: -30;
+         left: 25%;
+         right: 25%;
+       }
+      #home,#result{
+        padding:  5rem;
+        margin: 2rem;
+        border: 1px solid white;
+        border-radius: 10px;
+      }
+      .mission p {
+        font-size: 1.5rem;
+        padding: 0 2rem;
+        margin: 0;
+      }
+      .ast {
+        margin-left: 3rem;
+      }
+      #a-instructions,#b-instructions{
+        font-family:  Helvetica, sans-serif;
+        text-align: left;
+        padding-left: 2rem;
+      }
+      #a-instructions .row {
+        margin: 1rem;
+      }
+      #b-instructions .row {
+        margin: 1rem;
+      }
+      

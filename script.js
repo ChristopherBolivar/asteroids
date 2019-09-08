@@ -162,6 +162,11 @@ function startGame() {
         var html = document.querySelector("#result")
        
 
+        var star = new Image();
+        star.width = "1rem"
+        star.height = "1rem"
+        star.src = 'star.png'
+        var lpArr = [star,star,star,star,star]
          //function to keep track of score
          function scoreTracker() {
             ctx.fillStyle = 'white';
@@ -169,9 +174,14 @@ function startGame() {
             ctx.fillText("Score: " + score, 1000, 40);
             ctx.fillStyle = 'red';
             ctx.fillText("Health: " + lifePoints.toFixed(0), 150, 40);
+            // let cr = 0
+            // lpArr.forEach(a =>{
+            //     ctx.drawImage(a, 150 + cr , 50);
+            //     cr += 50
+            // })
+
         }
         //animate function
-
         var bgSFX = new Audio()
         bgSFX.volume = 1
         bgSFX.src = "bg.mp3";
@@ -238,28 +248,33 @@ function startGame() {
         function checkCollision() {
             var ship = craft;
 
-        
+          let counter;
             arr.forEach(block => {
-        
                 var rock = block;
-        
+                 counter = 0
                 if (ship.x < rock.x + rock.w &&
                     ship.x + ship.w > rock.x &&
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
                     srSFX.play()
+                    counter++
                     if(rock.h === 49){
                         lifePoints -= .0549
+                  
+                    //lpArr.splice(0,1)
+
                     }
                     if(rock.h === 99){
                         lifePoints -= .07;
+
+                   // lpArr.splice(0, 1)
                     }
                     if(lifePoints < .9){
                     
                     html.innerHTML = `
                     
                     <h1>You Suck!</h1>
-                    <h2>You have <u>failed</u> cleared the asteroid fields!</h2>
+                    <h2>You have <u>failed</u> to clear the asteroid fields!</h2>
                     <h3>Highscore: <span>${score}</span></h3>
                     <button id="playAgain" type="button" class="btn btn-light btn-lg">Play Again</button>
                     `
@@ -276,13 +291,14 @@ function startGame() {
                     }
                     
                        
+                
+                    console.log(counter)
+
                 }
-               
+                
                 if(block.y > canvas2.height){
                     arr.splice(arr.indexOf(block), 1)
                 }
-               
-
             })
             tarr.forEach(block => {
          
@@ -293,6 +309,7 @@ function startGame() {
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
                     srSFX.play()
+                    lpArr.splice(lpArr.length - 1, 1)
 
                     if(rock.h === 49){
                         lifePoints -= .0549
@@ -304,7 +321,7 @@ function startGame() {
                         html.innerHTML = `
                     
                         <h1>You Suck!</h1>
-                        <h2>You have <u>failed</u> cleared the asteroid fields!</h2>
+                        <h2>You have <u>failed</u> to clear the asteroid fields!</h2>
                         <h3>Highscore: <span>${score}</span></h3>
                         <button id="playAgain" type="button" class="btn btn-light btn-lg">Play Again</button>
                         `
