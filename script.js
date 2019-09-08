@@ -245,6 +245,8 @@ function startGame() {
         var expSFX = new Audio()
         expSFX.volume = 1
         expSFX.src = "exp.mp3";
+        var shipArr = ['ship.png','shipred.png','ship.png','shipred.png','ship.png']
+
         function checkCollision() {
             var ship = craft;
 
@@ -257,6 +259,11 @@ function startGame() {
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
                     srSFX.play()
+                    img.src = 'shipred.png'
+                    setTimeout(function(){ 
+                    img.src = 'ship.png' 
+                     }, 300);
+
                     counter++
                     if(rock.h === 49){
                         lifePoints -= .0549
@@ -292,7 +299,6 @@ function startGame() {
                     
                        
                 
-                    console.log(counter)
 
                 }
                 
@@ -300,6 +306,7 @@ function startGame() {
                     arr.splice(arr.indexOf(block), 1)
                 }
             })
+            //Detection for second wave
             tarr.forEach(block => {
          
                 var rock = block;
