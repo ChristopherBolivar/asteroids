@@ -347,7 +347,7 @@ function startGame() {
                         expSFX.play()
                         
                             setTimeout(function(){ 
-                            eArr.push(new Rectangle(block.x, block.y, 50, 50, 'exp_0008_Layer-4.png'))
+                            eArr.push(new Rectangle(block.x, block.y, block.w, block.h, 'exp_0008_Layer-4.png'))
                         }, 100);
                         
                        
@@ -387,7 +387,7 @@ function startGame() {
                             tarr.splice(tarr.indexOf(met), 1)
                             
                             setTimeout(function(){ 
-                                eArr.push(new Rectangle(met.x, met.y, 50, 50, 'exp_0008_Layer-4.png'))
+                                eArr.push(new Rectangle(met.x, met.y, met.w, met.h, 'exp_0008_Layer-4.png'))
                             }, 100);
                             
                             if(met.h >= 99){
