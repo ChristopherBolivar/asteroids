@@ -245,7 +245,6 @@ function startGame() {
         var expSFX = new Audio()
         expSFX.volume = 1
         expSFX.src = "exp.mp3";
-        var shipArr = ['ship.png','shipred.png','ship.png','shipred.png','ship.png']
 
         function checkCollision() {
             var ship = craft;
@@ -316,8 +315,12 @@ function startGame() {
                     ship.y < rock.y + rock.h &&
                     ship.y + ship.h > rock.y) {
                     srSFX.play()
-                    lpArr.splice(lpArr.length - 1, 1)
+                    img.src = 'shipred.png'
+                    setTimeout(function(){ 
+                    img.src = 'ship.png' 
+                     }, 300);
 
+                    lpArr.splice(lpArr.length - 1, 1)
                     if(rock.h === 49){
                         lifePoints -= .0549
                     }
@@ -349,9 +352,10 @@ function startGame() {
                
 
             })
+            //lazer in first wave
             arr.forEach(block => {
             barr.forEach(lazer =>{
-            
+            expArr = ['exp_0001_Layer-11.png','exp_0002_Layer-10.png','exp_0003_Layer-9.png','exp_0004_Layer-8.png']
                 var mHp = 2
                 var smHp = 1
                 
@@ -359,10 +363,12 @@ function startGame() {
                         lazer.x + lazer.w > block.x &&
                         lazer.y < block.y + block.h &&
                         lazer.y + lazer.h > block.y) {
-                        
+   
                         expSFX.play()
                         barr.splice(arr.indexOf(lazer), 1) 
                         arr.splice(arr.indexOf(block), 1)
+                   
+                    
                         
                         if(block.h >= 99){
                         score += 20
