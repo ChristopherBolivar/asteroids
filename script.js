@@ -4,8 +4,6 @@ document.querySelector("#startEngine").addEventListener('click', () => {
     startGame()
 })
 
-
-//Draws first canvas
 function startGame() {
     
     
@@ -16,13 +14,8 @@ function startGame() {
     canvas.width = w
     canvas.height = h
     var ctx = canvas.getContext('2d');
-    //lazer array
     var barr = []
-    var ang = 0; //angle
 
-
-
-    //spaceship object
     var craft = {
         x: w / 2,
         y: h - 150,
@@ -48,9 +41,8 @@ function startGame() {
 },
         
     }
-        //getting image for spaceship
         var img = new Image();
-        img.onload = function () { //on image load do the following stuff
+        img.onload = function () { 
             ctx.drawImage(img, craft.x, craft.y, craft.w,  craft.h);
            };
         img.src = 'ship.png'; //img
@@ -58,7 +50,7 @@ function startGame() {
         var lazerSFX = new Audio()
         lazerSFX.volume = 1
         lazerSFX.src = "lazersfx.mp3";
-    //Key functions for spaceship
+
     document.onkeydown = function (e) {
         switch (e.keyCode) {
             case 37:
@@ -73,7 +65,6 @@ function startGame() {
         }
     }
     var limg = 'lazer.png'
-    //constructor for lazer   
     class Bullet {
         constructor(x, y, width, height, img,sfx) {
             this.x = x;
@@ -92,7 +83,6 @@ function startGame() {
     }
 
 
-    // second canvas w/ enviroment
     
 
         var canvas2 = document.getElementById('canvas2');
@@ -101,7 +91,6 @@ function startGame() {
         canvas2.height = window.innerHeight / 1.05
 
       
-        //drawing background
         function drawBG() {
             ctx2.fillStyle = "#000"
             ctx2.fillRect(0, 0, canvas2.width, canvas2.height)
@@ -123,7 +112,6 @@ function startGame() {
                 var myImage = new Image(); 
                 myImage.src = this.img
                 ctx2.drawImage(myImage, this.x, this.y, this.w,  this.h);
-                //console.log(this.y)
             }
             downSlowly() {
                 this.y += 1
@@ -134,12 +122,10 @@ function startGame() {
         }
         
         
-        //Arr is meteor array,tarr is second wave, sArr is the array for stars
         let arr = []
         let tarr = []
         let eArr = []
         let sArr = []
-        //looping pushing to rectangle components to draw the meteors and stars onto canvas
         
         for (let i = 0; i < 100; i++) {
             arr.push(new Rectangle(Math.random() * canvas2.width, Math.random() * -10000, 50, 49, exp))
@@ -168,21 +154,14 @@ function startGame() {
         star.height = "1rem"
         star.src = 'star.png'
         var lpArr = [star,star,star,star,star]
-         //function to keep track of score
          function scoreTracker() {
             ctx.fillStyle = 'white';
             ctx.font = '24px Audiowide';
             ctx.fillText("Score: " + score, 1000, 40);
             ctx.fillStyle = 'red';
             ctx.fillText("Health: " + lifePoints.toFixed(0), 150, 40);
-            // let cr = 0
-            // lpArr.forEach(a =>{
-            //     ctx.drawImage(a, 150 + cr , 50);
-            //     cr += 50
-            // })
-
+          
         }
-        //animate function
         var bgSFX = new Audio()
         bgSFX.volume = 1
         bgSFX.src = "bg.mp3";
@@ -272,13 +251,11 @@ function startGame() {
                     if(rock.h === 49){
                         lifePoints -= .0549
                   
-                    //lpArr.splice(0,1)
 
                     }
                     if(rock.h === 99){
                         lifePoints -= .07;
 
-                   // lpArr.splice(0, 1)
                     }
                     if(lifePoints < .9){
                     
@@ -310,7 +287,6 @@ function startGame() {
                     arr.splice(arr.indexOf(block), 1)
                 }
             })
-            //Detection for second wave
             tarr.forEach(block => {
          
                 var rock = block;
@@ -357,10 +333,9 @@ function startGame() {
                
 
             })
-            //lazer in first wave
             arr.forEach(block => {
             barr.forEach(lazer =>{
-            expArr = ['exp_0000_Layer-12.png','exp_0001_Layer-11.png','exp_0002_Layer-10.png','exp_0003_Layer-9.png','exp_0004_Layer-8.png','exp_0005_Layer-7.png','exp_0006_Layer-6.png','exp_0007_Layer-5.png','exp_0008_Layer-4.png','exp_0000_Layer-12.png','exp_0001_Layer-11.png']
+            expArr = ['exp_0000_Layer-12.png','exp_0001_Layer-11.png','exp_0002_Layer-10.png','exp_0005_Layer-7.png','exp_0006_Layer-6.png','exp_0007_Layer-5.png','exp_0008_Layer-4.png','exp_0000_Layer-12.png','exp_0001_Layer-11.png']
                 var mHp = 2
                 var smHp = 1
                 
@@ -371,14 +346,11 @@ function startGame() {
    
                         expSFX.play()
                         
-                        expArr.forEach(b=>{
                             setTimeout(function(){ 
-                            eArr.push(new Rectangle(block.x, block.y, 50, 50, b))
+                            eArr.push(new Rectangle(block.x, block.y, 50, 50, 'exp_0008_Layer-4.png'))
                         }, 100);
-                        })
-                        setTimeout(function(){ 
-                            eArr.push(new Rectangle(block.x, block.y, 50, 50, 'exp_0000_Layer-12.png'))
-                        }, 200);
+                        
+                       
 
                         barr.splice(arr.indexOf(lazer), 1) 
                         arr.splice(arr.indexOf(block), 1)
@@ -413,6 +385,10 @@ function startGame() {
                             expSFX.play()
                             barr.splice(arr.indexOf(lazer), 1) 
                             tarr.splice(tarr.indexOf(met), 1)
+                            
+                            setTimeout(function(){ 
+                                eArr.push(new Rectangle(met.x, met.y, 50, 50, 'exp_0008_Layer-4.png'))
+                            }, 100);
                             
                             if(met.h >= 99){
                             score += 20
